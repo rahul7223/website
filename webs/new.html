@@ -1,0 +1,170 @@
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <script src="js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>home</title>
+
+<script>
+  var categories = ["Select Category", "Electronics", "Shoes"];
+  var electronics = ["Select Electronic Product","Samsung TV", "Mobile"];
+  var shoes = ["Select Shoe Product","Nike Casuals", "Lee Cooper Boot"];
+
+  var products = [
+      {Name: "Samsung TV", Price: 35000.56, Photo:"tv.jpg"},
+      {Name: "Mobile", Price: 15000.56, Photo:"mobile.jpg"},
+      {Name: "Nike Casuals", Price: 5000.56, Photo:"shoe.jpg"},
+      {Name: "Lee Cooper Boot", Price: 2000.56, Photo:"leeshoe.jpg"},
+  ]
+
+  function bodyload() {
+      lstCategories = document.getElementById("lstCategories");
+      for(var i=0; i<categories.length; i++) {
+         var option = document.createElement("option");
+         option.text = categories[i];
+         option.value = categories[i];
+
+         lstCategories.appendChild(option);
+
+      }
+  }
+  function AddProducts(list){
+   
+   lstProducts = document.getElementById("lstProducts");
+   for(var i=0; i<list.length; i++) {
+       var option = document.createElement("option");
+       option.text=list[i];
+       option.value=list[i];
+
+       lstProducts.appendChild(option);
+   }
+  }
+  function CategoryChanged(){
+      var category = document.getElementById("lstCategories").value;
+     
+      switch(category)
+      {
+          case "Electronics":
+          document.getElementById("lstProducts").innerHTML="";
+          AddProducts(electronics);
+          break;
+          case "Shoes":
+          document.getElementById("lstProducts").innerHTML="";
+          AddProducts(shoes);
+          break;
+          default:
+          document.getElementById("lstProducts").innerHTML="";
+          alert("Please Select a Category");
+          break;
+      }
+  }
+  var product;
+  function ProductChanged() {
+      var productName = document.getElementById("lstProducts").value;
+      product = products.filter(x=>x.Name==productName);
+      document.getElementById("lblName").innerHTML=product[0].Name;
+      document.getElementById("lblPrice").innerHTML = "&#8377;" + product[0].Price;
+      document.getElementById("imgProduct").src= product[0].Photo;
+  }
+  var cartItems = [];
+  function AddToCartClick(){
+      cartItems.push(product[0]);
+      for(var i=0; i<cartItems.length; i++) {
+          var td1 = document.createElement("td");
+          var td2 = document.createElement("td");
+          var td3 = document.createElement("td");
+          
+
+          td1.innerHTML=product[0].Name;
+          td2.innerHTML=product[0].Price;
+
+          var pic = new Image();
+          pic.src= product[0].Photo;
+          pic.width="50";
+          pic.height="50";
+          td3.appendChild(pic);
+
+          var tr = document.createElement("tr");
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+          tr.appendChild(td3);
+
+         
+      }
+      document.getElementById("tbody").appendChild(tr);
+
+  }
+</script>
+
+</head>
+<body onload="bodyload()" >
+    <div class="header">
+        <nav class="topnav">
+            <div class="cont">
+             
+              <h2>News</h2>
+                 <a href="home.html">Home</a>
+               <a href="new.html">News</a>
+                <a href="contact.html">contact</a>
+                <a href="aboutus.html">Aboutus</a>
+                <input type="text" value="text" id="search">
+                <button  type="button" class="primary">search</button>
+            </div>
+          </nav>
+        </div>
+<div id="b1">
+  <div class="container text-center">
+    <h2 class="text-primary">Amazon Shopping</h2>
+    <div class="form-group">
+        <label>Select a Category</label>
+        <select id="lstCategories" class="form-control" onchange="CategoryChanged()">
+
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Select a Product</label>
+        <select id="lstProducts" class="form-control" onchange="ProductChanged()">
+
+        </select>
+    </div>
+    <div class="form-group">
+        <div class="card">
+            <div class="card-header">
+                <h2 id="lblName"></h2>
+            </div>
+            <div class="card-body">
+                <img id="imgProduct" class="img-thumbnail" width="200" height="200">
+            </div>
+            <div class="card-footer">
+                <h3 id="lblPrice"></h3>
+                <input type="button" value="Add to Cart" class="btn btn-primary" onclick="AddToCartClick()">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <h2  id="cart">Your Cart Items</h2>
+        <table class="table table-warning">
+           <thead>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Preview</th>
+           </thead>
+           <tbody id="tbody">
+
+           </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
+
+<footer id="foot"> &#169
+copyright 2020
+</footer>
+</bode>
+</html> 
